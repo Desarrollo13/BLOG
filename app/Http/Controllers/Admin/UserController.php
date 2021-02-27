@@ -10,11 +10,13 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // ? Portego que un usuario blogger no pueda acceder a la url de administrador
+    public function __construct()
+    {
+        $this->middleware('can:admin.users.index')->only('index');
+        $this->middleware('can:admin.users.edit')->only('edit','update');
+    }
+    
     public function index()
     {
         return view('admin.users.index');
